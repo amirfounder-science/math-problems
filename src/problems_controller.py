@@ -8,6 +8,8 @@ from src.utils import responsify
 @app.route('/problems/<subject>')
 def get_problem(subject: str):
 
+    subject = subject.replace('-', '_')
+
     global_namespace = globals()
 
     builder_fn_name: str
