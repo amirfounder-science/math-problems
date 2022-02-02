@@ -37,9 +37,10 @@ def build_multiplication_problem():
 def build_division_problem():
     n1 = randint(1, 100)
     n2 = randint(1, 100)
-    product = n1 * n2
+    quotient = n1 / n2
+    quotient = round(quotient, 2)
 
-    p = '{} * {}'.format(n1, n2)
-    s = product
+    p = '{} / {}'.format(n1, n2)
+    s = quotient
 
     return p, s
