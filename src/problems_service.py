@@ -44,3 +44,14 @@ def build_division_problem():
     s = quotient
 
     return p, s
+
+
+def build_exponents_problem():
+    base = randint(1, 100)
+    exponent = randint(1, 10)
+    power = pow(base, exponent)
+
+    p = '{} ^ {}'.format(base, exponent)
+    s = power
+
+    return p, s

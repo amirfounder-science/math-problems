@@ -1,3 +1,4 @@
+from typing import Callable
 from src.http_exceptions import throw_not_found
 from src.problems_service import *
 from src.app import app
@@ -7,27 +8,20 @@ from src.utils import responsify
 @app.route('/problems/<subject>')
 def get_problem(subject: str):
 
-    problem: str
-    solution: int | list | str | tuple
+    global_namespace = globals()
 
-    if subject == 'addition':
-        problem, solution = build_addition_problem()
-        return responsify(problem, solution)
+    builder_fn_name: str
+    builder_fn: Callable
 
-    elif subject == 'subtraction':
-        problem, solution = build_subtraction_problem()
-        return responsify(problem, solution)
+    builder_fn_name = 'build_{}_problem'.format(subject)
+    builder_fn = global_namespace.get(builder_fn_name)
 
-    elif subject == 'multiplication':
-        problem, solution = build_multiplication_problem()
-        return responsify(problem, solution)
+    if builder_fn is None:
+        message: str
+        message = 'No problem for subject: {}'.format(subject)
 
-    elif subject == 'division':
-        problem, solution = build_division_problem()
-        return responsify(problem, solution)
+        throw_not_found(message)
 
-    message: str
-    message = 'We currently have no problem generators for subject: {}'.format(
-        subject)
+    p, s = builder_fn()
 
-    throw_not_found(message)
+    return responsify(p, s)

@@ -4,7 +4,7 @@ from flask import abort, jsonify
 
 def throw_not_found(message: str):
     error_response = {
-        'timestamp': datetime.isoformat(),
+        'timestamp': datetime.now().isoformat(),
         'error': 'Not Found',
         'error_message': message,
         'status': 404
